@@ -16,7 +16,8 @@ import com.davidecirillo.multichoicerecyclerview.MultiChoiceAdapter
 import kotlinx.android.synthetic.main.vh_gallery.view.*
 
 
-class GalleryAdapter(val context: Context, var images: MutableList<Image>) : MultiChoiceAdapter<GalleryAdapter.ViewHolder>() {
+class GalleryAdapter(val context: Context, var images: List<Image>) : MultiChoiceAdapter<GalleryAdapter.ViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryAdapter.ViewHolder {
         val v: View = LayoutInflater.from(context).inflate(R.layout.vh_gallery, parent, false);
@@ -48,8 +49,7 @@ class GalleryAdapter(val context: Context, var images: MutableList<Image>) : Mul
         return images.size
     }
 
-    fun updateList(images: MutableList<Image>) {
-        this.images = mutableListOf()
+    fun updateList(images: List<Image>) {
         this.images = images
 
         Log.i("updateList", this.images.toString())
@@ -58,9 +58,37 @@ class GalleryAdapter(val context: Context, var images: MutableList<Image>) : Mul
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         fun bindItems(image: Image) {
-//            Glide.with(itemView).load(Uri.fromFile(image.file)).into(itemView.iv_image)
+
+            var like: Boolean? = image.likedByUser
+            var likeCount: Int? = image?.likes
+
+            Glide.with(itemView).load(image.urls?.regular).into(itemView.iv_thumbnail)
+            itemView.tv_profile_name.setText(image.user?.name)
+            itemView.tv_like_count.setText(likeCount.toString())
+            var categoriesStringList: MutableList<String> = mutableListOf()
+            for (i in 0 until image.categories!!.size step 1) {
+                categoriesStringList.add(image.categories?.get(i)?.title!!)
+            }
+            itemView.tg_tags.setTags(categoriesStringList)
+
+            if (like!!) {
+                itemView.iv_like.setImageResource(R.drawable.ic_like)
+            }
+
+            itemView.iv_like.setOnClickListener(View.OnClickListener {
+                like = !like!!
+                if (like!!) {
+                    itemView.iv_like.setImageResource(R.drawable.ic_like)
+                    likeCount = likeCount?.plus(1)
+                } else {
+                    itemView.iv_like.setImageResource(R.drawable.ic_unlike)
+                    likeCount = likeCount?.minus(1)
+                }
+                itemView.tv_like_count.setText(likeCount.toString())
+            })
+
+
 //            itemView.iv_image.setImageURI(Uri.fromFile(image.file))
         }
     }

@@ -1,60 +1,46 @@
 package com.arval.arvalgallery
 
-import android.Manifest
 import android.app.Activity
-import android.content.Intent
-import android.content.pm.PackageManager
 import com.arval.arvalgallery.`object`.Image
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.CollapsingToolbarLayout
-import android.support.v7.widget.Toolbar
-import android.util.Log
 import com.arval.arvalgallery.adapter.GalleryAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.logging.Logger
-import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
+import android.util.Log
 import com.arval.arvalgallery.util.FileUtils
-import com.arval.arvalgallery.util.MediaScannerWrapper
-import com.arval.arvalgallery.util.PermissionUtil
-import com.arval.arvalgallery.util.PermissionUtil.READ_STORAGE_PERMISSION_REQUEST_CODE
 import com.bumptech.glide.Glide
-import com.davidecirillo.multichoicerecyclerview.MultiChoiceToolbar
-import kotlinx.android.synthetic.main.vh_gallery.*
-import kotlinx.android.synthetic.main.vh_gallery.view.*
+import com.dinuscxj.refresh.RecyclerRefreshLayout
 import java.io.File
 import java.util.*
-import javax.security.auth.login.LoginException
-import com.arval.*
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() ,HomeContract.HomeView {
 
     lateinit var adapter: GalleryAdapter
-    var images: MutableList<Image> = mutableListOf<Image>()
+    lateinit var homePresenter:HomePresenter
+    var images: List<Image> = emptyList()
     val activity: Activity = this
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 
-        val mToolbar = findViewById(R.id.toolbar) as Toolbar
-        toolbar.title = "Gallery"
-        setSupportActionBar(mToolbar)
-
+//        val mToolbar = findViewById(R.id.toolbar) as Toolbar
+//        toolbar.title = "Gallery"
+//        setSupportActionBar(mToolbar)
+        homePresenter = HomePresenter(this,this)
         adapter = GalleryAdapter(this, images)
 
+        refresh_layout.setOnRefreshListener(RecyclerRefreshLayout.OnRefreshListener {
+            refresh_layout.setRefreshing(true)
+            homePresenter.loadHome()
+        })
         rv_gallery_list.setLayoutManager(GridLayoutManager(this, 1, LinearLayoutManager.VERTICAL, false))
         rv_gallery_list.adapter = adapter
 
-
+        homePresenter.loadHome()
 //        if (PermissionUtil.checkStorage(this)) {
 //            scanAllImage()
 //        } else {
@@ -65,6 +51,15 @@ class MainActivity : AppCompatActivity() {
 //            }
 //
 //        }
+
+    }
+
+
+    override fun showHomepage(images: List<Image>) {
+
+        Log.i("showHomepage :", images.toString())
+        adapter.updateList(images)
+        refresh_layout.setRefreshing(false)
 
     }
 
@@ -105,3 +100,4 @@ class MainActivity : AppCompatActivity() {
 //        Log.i("onActivityResult :", requestCode.toString() + " - " + resultCode)
 //    }
 }
+

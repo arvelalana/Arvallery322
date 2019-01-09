@@ -38,7 +38,12 @@ dependencies {
     implementation 'com.joooonho:selectableroundedimageview:1.0.1'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.davidecirillo.multichoicerecyclerview:multichoicerecyclerview:2.3.0'
+    implementation 'me.gujun.android.taggroup:library:1.4@aar'
+
+    implementation "com.squareup.retrofit2:retrofit:2.4.0"
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'com.dinuscxj:recyclerrefreshlayout:2.0.5'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
