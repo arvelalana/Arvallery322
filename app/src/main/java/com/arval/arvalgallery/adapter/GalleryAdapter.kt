@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.arval.ImageLoader
 import com.arval.arvalgallery.PreviewActivity
 import com.arval.arvalgallery.R
 import com.arval.arvalgallery.`object`.Image
@@ -63,7 +64,12 @@ class GalleryAdapter(val context: Context, var images: List<Image>) : MultiChoic
             var like: Boolean? = image.likedByUser
             var likeCount: Int? = image?.likes
 
-            Glide.with(itemView).load(image.urls?.regular).into(itemView.iv_thumbnail)
+//            Glide.with(itemView).load(image.urls?.regular).into(itemView.iv_thumbnail)
+//            Glide.with(itemView).load(image.user?.profileImage?.medium).into(itemView.iv_profile)
+
+            ImageLoader.displayImage(image.urls?.regular!!,itemView.iv_thumbnail)
+            ImageLoader.displayImage(image.user?.profileImage?.medium!!,itemView.iv_profile)
+
             itemView.tv_profile_name.setText(image.user?.name)
             itemView.tv_like_count.setText(likeCount.toString())
             var categoriesStringList: MutableList<String> = mutableListOf()

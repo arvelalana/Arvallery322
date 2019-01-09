@@ -10,6 +10,8 @@ import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import com.arval.ImageCache
+import com.arval.ImageLoader
 import com.arval.arvalgallery.util.FileUtils
 import com.bumptech.glide.Glide
 import com.dinuscxj.refresh.RecyclerRefreshLayout
@@ -33,6 +35,7 @@ class HomeActivity : AppCompatActivity() ,HomeContract.HomeView {
         homePresenter = HomePresenter(this,this)
         adapter = GalleryAdapter(this, images)
 
+        ImageLoader.setCache(ImageCache())
         refresh_layout.setOnRefreshListener(RecyclerRefreshLayout.OnRefreshListener {
             refresh_layout.setRefreshing(true)
             homePresenter.loadHome()
