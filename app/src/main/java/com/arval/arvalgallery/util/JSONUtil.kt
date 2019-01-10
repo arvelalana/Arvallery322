@@ -39,6 +39,17 @@ object JSONUtil {
 
     }
 
+    fun loadJSONFromAsset(type: Type): Any? {
+        var json: String? = null
+        try {
+            val gson = Gson()
+            return gson.fromJson<Any>(json, type)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            return null
+        }
+    }
+
 
     @Throws(JSONException::class)
     fun jsonToMap(json: JSONObject): Map<String, Any> {

@@ -1,6 +1,7 @@
 package com.arval.arvalgallery
 
 import android.content.Context
+import com.arval.ArvalLoader
 import com.arval.arvalgallery.`object`.Image
 import com.arval.arvalgallery.service.NetworkService
 import com.arval.arvalgallery.service.ServiceFactory
@@ -21,6 +22,7 @@ class HomePresenter(private val homeView: HomeContract.HomeView, private val mCo
     }
 
     override fun loadHome() {
+//        val homepageResp = ArvalLoader.createRequest("http://pastebin.com/raw/wgkJgazE")
         val homepageResp = JSONUtil.loadJSONFromAsset(mContext, R.raw.homepage, object : TypeToken<List<Image>>() {}.type) as List<Image>
         homeView.showHomepage(homepageResp)
     }

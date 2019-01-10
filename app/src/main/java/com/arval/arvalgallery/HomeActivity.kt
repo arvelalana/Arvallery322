@@ -29,7 +29,7 @@ class HomeActivity : AppCompatActivity() ,HomeContract.HomeView {
         homePresenter = HomePresenter(this,this)
         adapter = GalleryAdapter(this, images)
 
-        ImageLoader.setCache(ArvalCache())
+        ArvalLoader.setCache(ArvalCache())
         refresh_layout.setOnRefreshListener(RecyclerRefreshLayout.OnRefreshListener {
             refresh_layout.setRefreshing(true)
             homePresenter.loadHome()
@@ -37,23 +37,9 @@ class HomeActivity : AppCompatActivity() ,HomeContract.HomeView {
         rv_gallery_list.setLayoutManager(GridLayoutManager(this, 1, LinearLayoutManager.VERTICAL, false))
         rv_gallery_list.adapter = adapter
 
-        ArvalLoader.setCache(ArvalCache())
-        ArvalLoader.createRequest("http://pastebin.com/raw/wgkJgazE")
 
-//        Log.i("download :", DownloadTasker("http://pastebin.com/raw/wgkJgazE",cacheDir).toString())
-//        DownloadTasker("http://pastebin.com/raw/wgkJgazE",cacheDir).execute()
-//        DownloadTasker.download("http://pastebin.com/raw/wgkJgazE")
         homePresenter.loadHome()
-//        if (PermissionUtil.checkStorage(this)) {
-//            scanAllImage()
-//        } else {
-//            try {
-//                PermissionUtil.requestStorage(this)
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//
-//        }
+
 
     }
 

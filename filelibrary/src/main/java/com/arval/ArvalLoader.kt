@@ -6,10 +6,12 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.ImageView
+import com.google.gson.Gson
 import okio.buffer
 import okio.sink
 import okio.source
 import java.io.*
+import java.lang.reflect.Type
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.ExecutorService
@@ -33,6 +35,7 @@ object ArvalLoader {
         if (cached != null) {
             return
         }
+
         executorService.submit {
             val inputStream: InputStream? = downloadFile(url)
             BufferedReader(InputStreamReader(inputStream) as Reader?).use {
@@ -50,6 +53,18 @@ object ArvalLoader {
                 Log.i("response.toString() :", response.toString())
             }
 
+        }
+    }
+
+
+    fun loadJSONFromAsset(type: Type): Any? {
+        var json: String? = null
+        try {
+            val gson = Gson()
+            return gson.fromJson<Any>(json, type)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            return null
         }
     }
 
