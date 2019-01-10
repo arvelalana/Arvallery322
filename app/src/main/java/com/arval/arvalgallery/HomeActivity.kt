@@ -6,18 +6,11 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.arval.arvalgallery.adapter.GalleryAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import com.arval.DownloadTasker
-import com.arval.ImageCache
-import com.arval.ImageLoader
-import com.arval.arvalgallery.util.FileUtils
-import com.bumptech.glide.Glide
+import com.arval.*
 import com.dinuscxj.refresh.RecyclerRefreshLayout
-import java.io.File
-import java.util.*
 
 class HomeActivity : AppCompatActivity() ,HomeContract.HomeView {
 
@@ -36,7 +29,7 @@ class HomeActivity : AppCompatActivity() ,HomeContract.HomeView {
         homePresenter = HomePresenter(this,this)
         adapter = GalleryAdapter(this, images)
 
-        ImageLoader.setCache(ImageCache())
+        ImageLoader.setCache(ArvalCache())
         refresh_layout.setOnRefreshListener(RecyclerRefreshLayout.OnRefreshListener {
             refresh_layout.setRefreshing(true)
             homePresenter.loadHome()
@@ -44,9 +37,11 @@ class HomeActivity : AppCompatActivity() ,HomeContract.HomeView {
         rv_gallery_list.setLayoutManager(GridLayoutManager(this, 1, LinearLayoutManager.VERTICAL, false))
         rv_gallery_list.adapter = adapter
 
+        ArvalLoader.setCache(ArvalCache())
+        ArvalLoader.createRequest("http://pastebin.com/raw/wgkJgazE")
 
-        Log.i("download :", DownloadTasker.downloadFile("http://pastebin.com/raw/wgkJgazE",cacheDir).toString())
-
+//        Log.i("download :", DownloadTasker("http://pastebin.com/raw/wgkJgazE",cacheDir).toString())
+//        DownloadTasker("http://pastebin.com/raw/wgkJgazE",cacheDir).execute()
 //        DownloadTasker.download("http://pastebin.com/raw/wgkJgazE")
         homePresenter.loadHome()
 //        if (PermissionUtil.checkStorage(this)) {

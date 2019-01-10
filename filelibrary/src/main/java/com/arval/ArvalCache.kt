@@ -7,6 +7,8 @@ import java.io.File
 import java.util.*
 import java.util.Collections.synchronizedMap
 import android.icu.lang.UCharacter.GraphemeClusterBreak.V
+import android.util.Log
+import java.nio.charset.Charset
 
 
 /**
@@ -37,18 +39,25 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.V
 //    }
 //
 //}
-class ImageCache : Cache {
+class ArvalCache : Cache {
 
-    val cache: LruCache<String, Bitmap>
+    val cache: LruCache<String, Any>
     var maxLimit: Long = 1000000 //1MB
     var expireTime: Long = 10000 //10s
 
 
     init {
         maxLimit = Runtime.getRuntime().maxMemory() / 4
-        cache = object : LruCache<String, Bitmap>(maxLimit.toInt()) {
-            override fun sizeOf(key: String?, bitmap: Bitmap?): Int {
-                return (bitmap?.rowBytes ?: 0) * (bitmap?.height ?: 0)
+        cache = object : LruCache<String, Any>(maxLimit.toInt()) {
+            override fun sizeOf(key: String?, value: Any?): Int {
+                val bitmap: Bitmap = value as Bitmap
+                val inte: Int = (bitmap?.rowBytes ?: 0) * (bitmap?.height ?: 0)
+                Log.i("response.toString() :", inte.toString())
+                return 100
+//                }else{
+//                    val s:String = value as String
+//                    return s.toByteArray(Charset.defaultCharset()).size
+//                }
             }
         }
     }

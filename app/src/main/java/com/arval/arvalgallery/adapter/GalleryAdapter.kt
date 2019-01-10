@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.arval.ArvalLoader
 import com.arval.ImageLoader
 import com.arval.arvalgallery.PreviewActivity
 import com.arval.arvalgallery.R
@@ -67,8 +68,8 @@ class GalleryAdapter(val context: Context, var images: List<Image>) : MultiChoic
 //            Glide.with(itemView).load(image.urls?.regular).into(itemView.iv_thumbnail)
 //            Glide.with(itemView).load(image.user?.profileImage?.medium).into(itemView.iv_profile)
 
-            ImageLoader.displayImage(image.urls?.regular!!,itemView.iv_thumbnail)
-            ImageLoader.displayImage(image.user?.profileImage?.medium!!,itemView.iv_profile)
+            ArvalLoader.loadImage(image.urls?.regular!!,itemView.iv_thumbnail)
+            ArvalLoader.loadImage(image.user?.profileImage?.medium!!,itemView.iv_profile)
 
             itemView.tv_profile_name.setText(image.user?.name)
             itemView.tv_like_count.setText(likeCount.toString())
