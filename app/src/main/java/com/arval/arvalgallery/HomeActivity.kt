@@ -10,6 +10,7 @@ import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import com.arval.DownloadTasker
 import com.arval.ImageCache
 import com.arval.ImageLoader
 import com.arval.arvalgallery.util.FileUtils
@@ -43,6 +44,10 @@ class HomeActivity : AppCompatActivity() ,HomeContract.HomeView {
         rv_gallery_list.setLayoutManager(GridLayoutManager(this, 1, LinearLayoutManager.VERTICAL, false))
         rv_gallery_list.adapter = adapter
 
+
+        Log.i("download :", DownloadTasker.downloadFile("http://pastebin.com/raw/wgkJgazE",cacheDir).toString())
+
+//        DownloadTasker.download("http://pastebin.com/raw/wgkJgazE")
         homePresenter.loadHome()
 //        if (PermissionUtil.checkStorage(this)) {
 //            scanAllImage()
