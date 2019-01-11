@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name=".PreviewActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

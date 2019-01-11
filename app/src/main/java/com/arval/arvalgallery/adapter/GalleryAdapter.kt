@@ -2,18 +2,15 @@ package com.arval.arvalgallery.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.arval.ArvalLoader
-import com.arval.ImageLoader
 import com.arval.arvalgallery.PreviewActivity
+import com.arval.loader.ArvalLoader
 import com.arval.arvalgallery.R
 import com.arval.arvalgallery.`object`.Image
-import com.bumptech.glide.Glide
 import com.davidecirillo.multichoicerecyclerview.MultiChoiceAdapter
 import kotlinx.android.synthetic.main.vh_gallery.view.*
 
@@ -28,12 +25,11 @@ class GalleryAdapter(val context: Context, var images: List<Image>) : MultiChoic
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var image: Image = images.get(position)
-//        holder.itemView.iv_image.setOnClickListener {
-//
-//            val intent: Intent = Intent(context, PreviewActivity::class.java)
-//            intent.putExtra("imagePath", image.path)
-//            context.startActivity(intent)
-//        }
+        holder.itemView.iv_thumbnail.setOnClickListener {
+            val intent: Intent = Intent(context, PreviewActivity::class.java)
+            intent.putExtra("url", image.urls?.regular!!)
+            context.startActivity(intent)
+        }
 
         holder.bindItems(image)
     }

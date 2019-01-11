@@ -1,14 +1,8 @@
-package com.arval
+package com.arval.loader
 
-import android.app.Instrumentation
 import android.graphics.Bitmap
 import android.util.LruCache
-import java.io.File
-import java.util.*
-import java.util.Collections.synchronizedMap
-import android.icu.lang.UCharacter.GraphemeClusterBreak.V
 import android.util.Log
-import java.nio.charset.Charset
 
 
 /**
@@ -50,9 +44,9 @@ class ArvalCache : Cache {
         maxLimit = Runtime.getRuntime().maxMemory() / 4
         cache = object : LruCache<String, Any>(maxLimit.toInt()) {
             override fun sizeOf(key: String?, value: Any?): Int {
-                val bitmap: Bitmap = value as Bitmap
-                val inte: Int = (bitmap?.rowBytes ?: 0) * (bitmap?.height ?: 0)
-                Log.i("response.toString() :", inte.toString())
+//                val bitmap: Bitmap = value as Bitmap
+//                val inte: Int = (bitmap?.rowBytes ?: 0) * (bitmap?.height ?: 0)
+//                Log.i("response.toString() :", inte.toString())
                 return 100
 //                }else{
 //                    val s:String = value as String
@@ -63,7 +57,7 @@ class ArvalCache : Cache {
     }
 
     override fun put(key: String, value: Any) {
-        cache.put(key, value as Bitmap?)
+        cache.put(key, value)
     }
 
     override fun get(key: String): Any? {

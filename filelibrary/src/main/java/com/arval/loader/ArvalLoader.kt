@@ -1,4 +1,4 @@
-package com.arval
+package com.arval.loader
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -22,13 +22,10 @@ import java.util.concurrent.Executors
  */
 
 object ArvalLoader {
-    private lateinit var cache: ArvalCache
+    private var cache: ArvalCache = ArvalCache()
     private var executorService: ExecutorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
     private val uiHandler: Handler = Handler(Looper.getMainLooper())
 
-    fun setCache(cache: ArvalCache) {
-        this.cache = cache
-    }
 
     fun createRequest(url: String) {
         val cached = cache.get(url)
@@ -87,7 +84,7 @@ object ArvalLoader {
     }
 
     fun clearCache() {
-        this.cache.clear()
+        cache.clear()
     }
 
     private fun updateImageView(imageView: ImageView, bitmap: Bitmap) {

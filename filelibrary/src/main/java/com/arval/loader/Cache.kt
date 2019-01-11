@@ -1,4 +1,4 @@
-package com.arval
+package com.arval.loader
 
 /**
  * Created by Arvel on 08/01/2019.

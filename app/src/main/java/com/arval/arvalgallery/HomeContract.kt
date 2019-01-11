@@ -12,6 +12,7 @@ class HomeContract {
     }
 
     interface HomeView {
+        fun setProgressIndicator(active: Boolean)
         fun showHomepage(images: List<Image>)
     }
 }
