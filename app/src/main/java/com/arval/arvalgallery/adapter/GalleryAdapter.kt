@@ -13,6 +13,8 @@ import com.arval.arvalgallery.R
 import com.arval.arvalgallery.`object`.Image
 import com.davidecirillo.multichoicerecyclerview.MultiChoiceAdapter
 import kotlinx.android.synthetic.main.vh_gallery.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class GalleryAdapter(val context: Context, var images: List<Image>) : MultiChoiceAdapter<GalleryAdapter.ViewHolder>() {
@@ -61,9 +63,6 @@ class GalleryAdapter(val context: Context, var images: List<Image>) : MultiChoic
             var like: Boolean? = image.likedByUser
             var likeCount: Int? = image?.likes
 
-//            Glide.with(itemView).load(image.urls?.regular).into(itemView.iv_thumbnail)
-//            Glide.with(itemView).load(image.user?.profileImage?.medium).into(itemView.iv_profile)
-
             ArvalLoader.loadImage(image.urls?.regular!!,itemView.iv_thumbnail)
             ArvalLoader.loadImage(image.user?.profileImage?.medium!!,itemView.iv_profile)
 
@@ -91,8 +90,12 @@ class GalleryAdapter(val context: Context, var images: List<Image>) : MultiChoic
                 itemView.tv_like_count.setText(likeCount.toString())
             })
 
-
-//            itemView.iv_image.setImageURI(Uri.fromFile(image.file))
+            var date = image.createdAt?.substringBefore("T")
+            var spf = SimpleDateFormat("yyyy-MM-dd")
+            val newDate = spf.parse(date)
+            spf = SimpleDateFormat("dd MMM yyyy")
+            date = spf.format(newDate)
+            itemView.tv_date.setText(date)
         }
     }
 }
